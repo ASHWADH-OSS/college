@@ -1,0 +1,1066 @@
+Evaluating Arithmetic Expression
+
+
+
+#include <stdio.h>
+#include <string.h>
+#define Max 20
+int stack [MAX]; int top = -1;
+char expr[MAX];
+Void Push (int elen);
+int pop();
+int main()
+{
+int i, a, b, c, e;
+printf("Enter the post fix expression:”);
+gets (expr);
+for (i=0; i<strlen(expr); i++)
+{
+if (expr[i]=='+' || expr[i]==`-’ || expr[i] == ‘*’ || expr[i] == ‘/’)
+{
+b= pop();
+a = pop();
+Switch (expr [i])
+{
+case '+': c=a+b; push (c); break;
+case '-': c=a-b; push (c); break;
+case '*': c=a*b; push (c); break;
+case '/': c=a/b; push (c); break;
+}
+}
+
+else
+{
+printf(' Enter the value of % C", exp[i]);
+Scanf ("%d", &e);
+Push (e);
+}
+}
+printf("The result is %d", pop ());
+return 0;
+}
+void push (int ele).
+{ 
+top = top + 1;
+stack [top]= elem;
+}
+intpop ()
+{
+int e;
+e = stack[top];
+top=top-1;
+return e;
+}
+
+Output
+Enter the Postfix expression: abc+ *d*
+Enter the value of a: 2
+Enter the value of b: 3
+Enter the value of c: 4
+Enter the value of d: 5
+The result is 70.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Doubly linked list:
+
+
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *prev;
+    struct node *next;
+};
+
+struct node *head=NULL;
+void create();
+void display();
+void insert_beg();
+void insert_end();
+void delete_beginning();
+void delete_end();
+void insert_specific();
+void delete_specific();
+void find();
+void find_prev();
+void find_next();
+int main()
+{
+    int x=1;
+    while(x)
+    {
+    int choice;
+    printf("\n*****MENU*****\n1.create\n2.insert at beginning\n3.insert at end\n4.delete from beginning\n5.delete from end\n6.delete specific\n7.insert_specific\n8.find element\n9.find previous\n10.find next\n11.display\n12.exit");
+    printf("\nenter choice");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+        case 1:
+        create();
+        break;
+        case 2:
+        insert_beg();
+        break;
+        case 3:
+        insert_end();
+        break;
+        case 4:
+        delete_beginning();
+        break;
+        case 5:
+        delete_end();
+        break;
+        case 6:
+        delete_specific();
+        break;
+        case 7:
+        insert_specific();
+        break;
+        case 8:
+        find();
+        break;
+        case 9:
+        find_prev();
+        break;
+        case 10:
+        find_next();
+        break;
+        case 11:
+        display();
+        break;
+        case 12:
+        x=0;
+        printf("\nexitingg....\n");
+        break;
+    }
+    }
+}
+   
+void create()
+{
+        struct node *temp;
+        temp=head;
+        int x=1,item;
+        while(x)
+        {
+            struct node *newnode=(struct node*)malloc(sizeof(struct node));
+            printf("enter element");
+            scanf("%d",&item);
+            newnode->data=item;
+            newnode->next=NULL;
+            if(head==NULL)
+            {
+               
+                head=temp=newnode;
+                head->prev=NULL;
+               
+            }
+            else
+            {
+               
+                temp->next=newnode;
+                newnode->prev=temp;
+               
+            }
+            temp=newnode;
+            printf("add more?(1/0)");
+            scanf("%d",&x);
+           
+           
+        }
+        printf("\nlist created!!!");
+}
+
+void display()
+{
+    struct node *temp;
+    temp=head;
+    if(head==NULL)
+    {
+        printf("List is empty!!\n");
+    }
+    else
+    {
+        while(temp->next!=NULL)
+        {
+            printf("%d\n",temp->data);
+            temp=temp->next;
+        }
+        printf("%d",temp->data);
+    }
+}
+
+void insert_beg()
+{
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter element to insert");
+    scanf("%d",&newnode->data);
+    newnode->next=head;
+    newnode->prev=NULL;
+    head=newnode;
+    printf("one node inserted");
+}
+
+void insert_end()
+{
+    struct node *temp;
+    temp=head;
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter element to insert");
+    scanf("%d",&newnode->data);
+    newnode->next=NULL;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode;
+    newnode->prev=temp;
+    printf("\nOne node inserted!!\n");
+}
+
+void delete_beginning()
+{
+    head->next->prev=NULL;
+    head=head->next;
+    printf("\n one node deleted\n");
+}
+
+
+void delete_end()
+{
+    struct node *temp;
+    temp=head;
+    while(temp->next!=0)
+    {
+        temp=temp->next;
+    }
+    temp->prev->next=NULL;
+    printf("\n one node deleted!\n");
+}
+
+void insert_specific()
+{
+    int pos;
+    struct node *temp;
+    temp=head;
+    struct node *newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter position:");
+    scanf("%d",&pos);
+    printf("enter element:");
+    scanf("%d",&newnode->data);
+    for(int i=1;i<pos-1;i++)
+    {
+        temp=temp->next;
+    }
+    newnode->next=temp->next;
+    newnode->prev=temp;
+    temp->next=newnode;
+    temp->next->prev=newnode;
+    printf("\none node inserted\n");
+    
+}
+
+void delete_specific()
+{
+    int pos;
+    struct node *temp;
+    temp=head;
+    printf("enter pos to delete:");
+    scanf("%d",&pos);
+    for(int i=1;i<pos;i++)
+    {
+        temp=temp->next;
+    }
+    temp->next->prev=temp->prev;
+    temp->prev->next=temp->next;
+    printf("\n node deleted!\n");
+    
+}
+
+void find()
+{
+    int ele,i=1;
+    struct node *temp;
+    temp=head;
+    printf("enter element to find:");
+    scanf("%d",&ele);
+    while(temp->data!=ele)
+    {
+        temp=temp->next;
+        i=i+1;
+    }
+    printf("element found at %d",i);
+}
+
+void find_prev()
+{
+    int ele,i=1;
+    struct node *temp;
+    temp=head;
+    printf("enter the previous of element to be found:");
+    scanf("%d",&ele);
+    while(temp->data!=ele)
+    {
+        temp=temp->next;
+    }
+    printf("the element is: %d",temp->prev->data);
+}
+void find_next()
+{
+    int ele,i=1;
+    struct node *temp;
+    temp=head;
+    printf("enter the previous of element to be found:");
+    scanf("%d",&ele);
+    while(temp->data!=ele)
+    {
+        temp=temp->next;
+    }
+    printf("the element is: %d",temp->next->data);
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Singly Linked List:
+
+
+
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+struct node 
+{ 
+ int Element; 
+ struct node *Next; 
+}; 
+typedef struct node Node; 
+ 
+int IsEmpty(Node *List); 
+int IsLast(Node *Position); 
+Node *Find(Node *List, int x); 
+Node *FindPrevious(Node *List, int x); 
+Node *FindNext(Node *List, int x); 
+void InsertBeg(Node *List, int e); 
+void InsertLast(Node *List, int e); 
+void InsertMid(Node *List, int p, int e); 
+void DeleteBeg(Node *List); 
+void DeleteEnd(Node *List); 
+void DeleteMid(Node *List, int e); 
+void Traverse(Node *List);
+
+int main() 
+{ 
+ Node *List = malloc(sizeof(Node)); 
+ List->Next = NULL; 
+ Node *Position; 
+ int ch, e, p; 
+ printf("1.Insert Beg \n2.Insert Middle \n3.Insert End"); 
+ printf("\n4.Delete Beg \n5.Delete Middle \n6.Delete End"); 
+ printf("\n7.Find \n8.Traverse \n9.Exit\n"); 
+ do 
+ { 
+  printf("Enter your choice : "); 
+  scanf("%d", &ch); 
+  switch(ch) 
+  { 
+   case 1: 
+    printf("Enter the element : "); 
+    scanf("%d", &e); 
+    InsertBeg(List, e); 
+    break; 
+   case 2: 
+    printf("Enter the position element : "); 
+    scanf("%d", &p); 
+    printf("Enter the element : "); 
+    scanf("%d", &e); 
+    InsertMid(List, p, e); 
+    break; 
+   case 3: 
+    printf("Enter the element : "); 
+    scanf("%d", &e); 
+    InsertLast(List, e); 
+    break; 
+   case 4: 
+    DeleteBeg(List); 
+    break; 
+   case 5: 
+    printf("Enter the element : "); 
+    scanf("%d", &e); 
+    DeleteMid(List, e); 
+    break; 
+   case 6: 
+    DeleteEnd(List); 
+    break; 
+   case 7: 
+    printf("Enter the element : "); 
+    scanf("%d", &e); 
+    Position = Find(List, e); 
+    if(Position != NULL) 
+     printf("Element found...!\n"); 
+    else 
+     printf("Element not found...!\n"); 
+    break; 
+   case 8: 
+    Traverse(List); 
+    break; 
+  } 
+ } while(ch <= 8); 
+ 
+ return 0; 
+} 
+ 
+int IsEmpty(Node *List) 
+{ 
+ if(List->Next == NULL) 
+  return 1; 
+ else 
+  return 0; 
+} 
+int IsLast(Node *Position) 
+{ 
+ if(Position->Next == NULL) 
+  return 1; 
+ else 
+  return 0; 
+} 
+Node *Find(Node *List, int x) 
+{ 
+ Node *Position; 
+ Position = List->Next; 
+ while(Position != NULL && Position->Element != x) 
+   Position = Position->Next; 
+ return Position; 
+} 
+Node *FindPrevious(Node *List, int x) 
+{ 
+ Node *Position; 
+ Position = List; 
+ while(Position->Next != NULL && Position->Next->Element != x) 
+   Position = Position->Next; 
+ return Position; 
+} 
+Node *FindNext(Node *List, int x) 
+{ 
+ Node *Position; 
+ Position = Find(List, x); 
+ return Position->Next; 
+} 
+ 
+void InsertBeg(Node *List, int e) 
+{ 
+ Node *NewNode = malloc(sizeof(Node)); 
+ NewNode->Element = e; 
+ 
+ if(IsEmpty(List)) 
+  NewNode->Next = NULL; 
+ else 
+  NewNode->Next = List->Next; 
+ List->Next = NewNode; 
+} 
+ 
+void InsertLast(Node *List, int e) 
+{ 
+ Node *NewNode = malloc(sizeof(Node)); 
+ Node *Position; 
+ NewNode->Element = e; 
+ NewNode->Next = NULL; 
+ 
+ if(IsEmpty(List)) 
+  List->Next = NewNode; 
+ else 
+ { 
+  Position = List; 
+  while(Position->Next != NULL) 
+   Position = Position->Next; 
+  Position->Next = NewNode; 
+ } 
+} 
+ 
+void InsertMid(Node *List, int p, int e) 
+{ 
+ Node *NewNode = malloc(sizeof(Node)); 
+ Node *Position; 
+ Position = Find(List, p); 
+ NewNode->Element = e; 
+ NewNode->Next = Position->Next; 
+ Position->Next = NewNode; 
+} 
+ 
+ 
+void DeleteBeg(Node *List) 
+{ 
+ if(!IsEmpty(List)) 
+ { 
+  Node *TempNode; 
+  TempNode = List->Next; 
+  List->Next = TempNode->Next; 
+  printf("The deleted item is %d\n", TempNode->Element); 
+  free(TempNode); 
+ } 
+ else 
+  printf("List is empty...!\n"); 
+} 
+ 
+void DeleteEnd(Node *List) 
+{ 
+ if(!IsEmpty(List)) 
+ { 
+  Node *Position; 
+  Node *TempNode; 
+  Position = List; 
+  while(Position->Next->Next != NULL) 
+   Position = Position->Next; 
+  TempNode = Position->Next; 
+  Position->Next = NULL; 
+  printf("The deleted item is %d\n", TempNode->Element); 
+  free(TempNode); 
+ } 
+ else 
+  printf("List is empty...!\n"); 
+} 
+ 
+void DeleteMid(Node *List, int e) 
+{ 
+ if(!IsEmpty(List)) 
+ { 
+  Node *Position; 
+  Node *TempNode; 
+  Position = FindPrevious(List, e); 
+  if(!IsLast(Position)) 
+  { 
+   TempNode = Position->Next; 
+   Position->Next = TempNode->Next; 
+   printf("The deleted item is %d\n", TempNode->Element); 
+   free(TempNode); 
+  } 
+ } 
+ else 
+  printf("List is empty...!\n"); 
+}
+void Traverse(Node *List) 
+{ 
+ if(!IsEmpty(List)) 
+ { 
+  Node *Position; 
+  Position = List; 
+  while(Position->Next != NULL) 
+  { 
+   Position = Position->Next; 
+   printf("%d\t", Position->Element); 
+  } 
+  printf("\n"); 
+ } 
+ else 
+  printf("List is empty...!\n"); 
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Polynomial Manipulation:
+
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+struct poly 
+{ 
+ int coeff; 
+ int pow; 
+ struct poly *Next; 
+}; 
+typedef struct poly Poly; 
+void Create(Poly *List); 
+void Display(Poly *List); 
+void Addition(Poly *Poly1, Poly *Poly2, Poly *Result); 
+ 
+int main() 
+{ 
+ Poly *Poly1 = malloc(sizeof(Poly)); 
+ Poly *Poly2 = malloc(sizeof(Poly)); 
+ Poly *Result = malloc(sizeof(Poly)); 
+ Poly1->Next = NULL; 
+ Poly2->Next = NULL; 
+ printf("Enter the values for first polynomial :\n"); 
+ Create(Poly1);
+ printf("The polynomial equation is : "); 
+ Display(Poly1); 
+ printf("\nEnter the values for second polynomial :\n"); 
+ Create(Poly2); 
+ printf("The polynomial equation is : "); 
+ Display(Poly2); 
+ Addition(Poly1, Poly2, Result); 
+ printf("\nThe polynomial equation addition result is : "); 
+ Display(Result); 
+ return 0; 
+} 
+ 
+void Create(Poly *List) 
+{ 
+ int choice; 
+ Poly *Position, *NewNode; 
+ Position = List; 
+ do 
+ { 
+  NewNode = malloc(sizeof(Poly)); 
+  printf("Enter the coefficient : "); 
+  scanf("%d", &NewNode->coeff); 
+  printf("Enter the power : "); 
+  scanf("%d", &NewNode->pow); 
+  NewNode->Next = NULL; 
+  Position->Next = NewNode; 
+  Position = NewNode; 
+  printf("Enter 1 to continue : "); 
+  scanf("%d", &choice); 
+ } while(choice == 1); 
+} 
+ 
+void Display(Poly *List) 
+{ 
+ Poly *Position; 
+ Position = List->Next; 
+ while(Position != NULL) 
+ { 
+  printf("%dx^%d", Position->coeff, Position->pow); 
+  Position = Position->Next; 
+  if(Position != NULL && Position->coeff > 0) 
+  { 
+   printf("+"); 
+  } 
+ } 
+} 
+ 
+void Addition(Poly *Poly1, Poly *Poly2, Poly *Result) 
+{ 
+ Poly *Position; 
+ Poly *NewNode; 
+ Poly1 = Poly1->Next; 
+ Poly2 = Poly2->Next; 
+ Result->Next = NULL; 
+ Position = Result; 
+ while(Poly1 != NULL && Poly2 != NULL) 
+ { 
+   NewNode = malloc(sizeof(Poly)); 
+   if(Poly1->pow == Poly2->pow) 
+   { 
+    NewNode->coeff = Poly1->coeff + Poly2->coeff; 
+    NewNode->pow = Poly1->pow; 
+    Poly1 = Poly1->Next; 
+    Poly2 = Poly2->Next; 
+   } 
+   else if(Poly1->pow > Poly2->pow) 
+   { 
+    NewNode->coeff = Poly1->coeff; 
+    NewNode->pow = Poly1->pow; 
+    Poly1 = Poly1->Next; 
+   } 
+   else if(Poly1->pow < Poly2->pow) 
+   { 
+    NewNode->coeff = Poly2->coeff; 
+    NewNode->pow = Poly2->pow; 
+    Poly2 = Poly2->Next; 
+   } 
+   NewNode->Next = NULL; 
+   Position->Next = NewNode; 
+   Position = NewNode; 
+ } 
+ 
+ while(Poly1 != NULL || Poly2 != NULL) 
+ { 
+   NewNode = malloc(sizeof(Poly)); 
+   if(Poly1 != NULL) 
+   { 
+    NewNode->coeff = Poly1->coeff; 
+    NewNode->pow = Poly1->pow; 
+    Poly1 = Poly1->Next; 
+   } 
+   if(Poly2 != NULL) 
+   { 
+    NewNode->coeff = Poly2->coeff; 
+    NewNode->pow = Poly2->pow; 
+    Poly2 = Poly2->Next; 
+   } 
+   NewNode->Next = NULL; 
+   Position->Next = NewNode; 
+   Position = NewNode; 
+ } 
+}
+
+
+Polynomial Subtraction:
+
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+struct poly 
+{ 
+ int coeff; 
+ int pow; 
+ struct poly *Next; 
+}; 
+typedef struct poly Poly; 
+void Create(Poly *List); 
+void Display(Poly *List); 
+void Subtraction(Poly *Poly1, Poly *Poly2, Poly *Result); 
+ 
+int main() 
+{ 
+ Poly *Poly1 = malloc(sizeof(Poly)); 
+ Poly *Poly2 = malloc(sizeof(Poly)); 
+ Poly *Result = malloc(sizeof(Poly)); 
+ Poly1->Next = NULL; 
+ Poly2->Next = NULL; 
+ printf("Enter the values for first polynomial :\n"); 
+ Create(Poly1); 
+ printf("The polynomial equation is : "); 
+ Display(Poly1); 
+ printf("\nEnter the values for second polynomial :\n"); 
+ Create(Poly2); 
+ printf("The polynomial equation is : "); 
+ Display(Poly2); 
+ Subtraction(Poly1, Poly2, Result); 
+ printf("\nThe polynomial equation subtraction result is : "); 
+ Display(Result); 
+ return 0; 
+} 
+ 
+void Create(Poly *List) 
+{ 
+ int choice; 
+ Poly *Position, *NewNode; 
+ Position = List; 
+ do 
+ { 
+  NewNode = malloc(sizeof(Poly)); 
+  printf("Enter the coefficient : "); 
+  scanf("%d", &NewNode->coeff); 
+  printf("Enter the power : "); 
+  scanf("%d", &NewNode->pow); 
+  NewNode->Next = NULL; 
+  Position->Next = NewNode; 
+  Position = NewNode; 
+  printf("Enter 1 to continue : "); 
+  scanf("%d", &choice); 
+ } while(choice == 1); 
+} 
+ 
+void Display(Poly *List) 
+{ 
+ Poly *Position; 
+ Position = List->Next; 
+ while(Position != NULL) 
+ { 
+  printf("%dx^%d", Position->coeff, Position->pow); 
+  Position = Position->Next; 
+  if(Position != NULL && Position->coeff > 0) 
+  { 
+   printf("+"); 
+  } 
+ } 
+} 
+ 
+void Subtraction(Poly *Poly1, Poly *Poly2, Poly *Result) 
+{ 
+ Poly *Position; 
+ Poly *NewNode; 
+ Poly1 = Poly1->Next; 
+ Poly2 = Poly2->Next; 
+ Result->Next = NULL; 
+ Position = Result; 
+ while(Poly1 != NULL && Poly2 != NULL) 
+ { 
+   NewNode = malloc(sizeof(Poly)); 
+   if(Poly1->pow == Poly2->pow) 
+   { 
+    NewNode->coeff = Poly1->coeff - Poly2->coeff; 
+    NewNode->pow = Poly1->pow; 
+    Poly1 = Poly1->Next; 
+    Poly2 = Poly2->Next; 
+   } 
+   else if(Poly1->pow > Poly2->pow) 
+   { 
+    NewNode->coeff = Poly1->coeff; 
+    NewNode->pow = Poly1->pow; 
+    Poly1 = Poly1->Next; 
+   } 
+   else if(Poly1->pow < Poly2->pow) 
+   { 
+    NewNode->coeff = -(Poly2->coeff); 
+    NewNode->pow = Poly2->pow; 
+    Poly2 = Poly2->Next; 
+   } 
+ 
+   NewNode->Next = NULL; 
+   Position->Next = NewNode; 
+   Position = NewNode; 
+ } 
+ 
+ while(Poly1 != NULL || Poly2 != NULL) 
+ { 
+   NewNode = malloc(sizeof(Poly)); 
+   if(Poly1 != NULL) 
+   { 
+    NewNode->coeff = Poly1->coeff; 
+    NewNode->pow = Poly1->pow; 
+    Poly1 = Poly1->Next; 
+   } 
+   if(Poly2 != NULL) 
+   { 
+    NewNode->coeff = -(Poly2->coeff); 
+    NewNode->pow = Poly2->pow; 
+    Poly2 = Poly2->Next; 
+   } 
+   NewNode->Next = NULL; 
+   Position->Next = NewNode; 
+   Position = NewNode; 
+ }
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Stack Implementation:
+
+#include<stdio.h>
+#include<stdlib.h>
+#define max 5
+int stack[max];
+int top=-1;
+void push(int);
+int pop();
+int top();
+void display();
+int main()
+{
+int ch,ele;
+do
+{
+Printf(“1.Push\n2.Pop\n3.Top\n4.Display\n enter your choice\n”);
+Scanf(“%d”,&ch);
+Switch(ch)
+{
+Case 1:
+         Printf(“enter element”);
+         Scanf(“%d”,ele);
+         push(ele);
+         break;
+Case 2:
+        Printf(“the popped element %d”,pop());
+        Break;
+Case 3:
+       Printf(“Top element %d”,top());
+       Break;
+Case 4:
+      Display();
+      Break;
+}
+}while(ch<=4);
+
+Void push(int ele)
+{
+if (top>max-1)
+         printf(“Stack is full”);
+top=top+1;
+stack[top]=ele;
+}
+
+int pop()
+{
+X=Stack[top];
+top=top-1;
+return X;
+}
+
+int top()
+{
+return stack[top];
+}
+
+void display()
+{
+printf(“Elements:”);
+for(int i=0;i<max;i++)
+printf(“%d”,stack[i]);
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DFS:
+
+#include<stdio.h>
+#include<stdlib.h>
+int adj[5][5];
+void DFS(int adj[5][5]; int visited[],int)
+int main()
+{
+printf(“enter the adjacency list(0 if nodes are not connected and 1 if nodes are connected)”);
+for(int i=0;i<5;i++)
+{
+for (int j=0;j<5;j++)
+{
+scanf(“%d”,&adjlist[i][j]);
+}
+}
+int visited[5];
+DFS(adj[5][5],visited,0);
+return 0;
+}
+
+void DFS(int adj[5][5],int visited[],int start)
+{
+int stack[5],top=-1,k,I;
+for(k=0;k<5;k++)
+visited[k]=0;
+stack[++top]=start;
+visited[start]=1;
+while(top!=-1)
+{
+start=stack[top--];
+printf(“%c”,start+65);
+for (i=0;i<5;i++)
+{
+if (adj[start][i]&&visited[i]==0)
+{
+stack[++top]=I;
+visited[i]=1;
+break;
+}
+}
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Tree Traversal:
+
+#include<stdio.h>
+#include<stdlib.h>
+Struct Node
+{
+Int data;
+Struct Node *left;
+Struct Node *right;
+};
+Struct Node*  create_node(int data)
+{
+Struct Node *newnode= struct Node* malloc(sizeof(struct Node)):
+newnode->data=data;
+newnode->left=NULL;
+newnode->right=NULL;
+return newnode;
+}
+Struct Node* insert(struct Node *root, int data)
+{
+if (root==NULL)
+root=create_node(data)
+else if( data<root->data)
+root->left=insert(root->left, data);
+else if(data>root->data)
+root->right=insert(root->right, data);
+return root;
+}
+Void inorder(struct Node *root)
+{
+Printf(“%d”, inorder(root->left));
+Printf(“%d”, root->data);
+Printf(“%d”,inorder( root->right));
+}
+Void preorder(struct Node *root)
+{
+Printf(“%d”, root->data);
+Printf(“%d”,preorder(root->left));
+Printf(“%d”,preorder(root->right));
+}
+Void postorder(struct Node *root)
+{
+Printf(“%d”,postorder(root->left));
+Printf(“%d”, postorder(root->right));
+Printf(“%d”,root->data);
+}
+
+int main()
+{
+Struct Node *root=NULL;
+insert(10);
+insert(20);
+insert(40);
+insert(65);
+insert(25);
+insert(50);
+printf(“Inorder traversal\n”);
+inorder(root);
+printf(“pre order traversal\n”);
+preorder(root);
+printf(“post order traversal\n”);
+ postorder(root);
+return 0;
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+BFS:
+
+#include<stdio.h>
+#include<stdlib.h>
+int adj[5][5];
+void BFS(int adj[5][5]; int visited[],int)
+int main()
+{
+printf(“enter the adjacency list(0 if nodes are not connected and 1 if nodes are connected)”);
+for(int i=0;i<5;i++)
+{
+for (int j=0;j<5;j++)
+{
+scanf(“%d”,&adjlist[i][j]);
+}
+}
+int visited[5];
+BFS(adj[5][5],visited,0);
+return 0;
+}
+
+void BFS(int adj[5][5],int visited[],int start)
+{
+int queue[5],front=-1,rear=-1,k,I;
+for(k=0;k<5;k++)
+visited[k]=0;
+rear=rear+1;
+queue[rear]=start;
+front=front+1;
+visited[start]=1;
+while(rear>=front)
+{
+start=queue[front];
+front=front+1;
+printf(“%c”,start+65);
+for (i=0;i<5;i++)
+{
+if (adj[start][i]&&visited[i]==0)
+{
+rear=rear+1;
+queue[rear]=i;
+visited[i]=1;
+break;
+}
+}
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+DATA STRUCTURES
+ASHWADH.A
+231501022
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
